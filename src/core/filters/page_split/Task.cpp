@@ -42,6 +42,7 @@
 #include <QImage>
 #include <QObject>
 #include <QDebug>
+#include <iostream>
 #include <memory>
 #include <assert.h>
 
@@ -216,6 +217,18 @@ Task::process(TaskStatus const& status, FilterData const& data)
     }
 
     PageLayout const& layout = record.params()->pageLayout();
+    if (!layout.isNull()) {
+      int nCutters = layout.numCutters();
+      std::cout << "Layout: ncutters=" << nCutters << std::endl;
+      for( int i=0; i < nCutters; ++i) {
+        QLineF cutterLine = layout.cutterLine(i);
+        std::cout << cutterLine.x1() << " " << cutterLine.y1() << " "
+                  << cutterLine.x2() << " " << cutterLine.y2() << " "
+                  << std::floor((cutterLine.x2()+cutterLine.x1())/2.+0.5)
+                  << std::endl;
+      }
+    }
+
     ui_data.setLayoutTypeAutoDetected(
         record.combinedLayoutType() == AUTO_LAYOUT_TYPE
     );
