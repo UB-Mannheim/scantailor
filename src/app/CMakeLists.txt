@@ -78,7 +78,7 @@ ENDIF(WIN32)
 
 IF (WIN32)
         ADD_EXECUTABLE(
-                scantailor-universal WIN32 ${gui_only_sources} ${resource_sources} ${win32_resource_file}
+                scantailor-ubma WIN32 ${gui_only_sources} ${resource_sources} ${win32_resource_file}
         )
 ELSEIF(APPLE)
 
@@ -87,44 +87,44 @@ ELSEIF(APPLE)
         set_source_files_properties( ${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
 
         ADD_EXECUTABLE(
-                scantailor-universal MACOSX_BUNDLE ${gui_only_sources} ${resource_sources} ${ICON_PATH}
+                scantailor-ubma MACOSX_BUNDLE ${gui_only_sources} ${resource_sources} ${ICON_PATH}
         )
-        set_target_properties(scantailor-universal PROPERTIES MACOSX_BUNDLE_INFO_PLIST
+        set_target_properties(scantailor-ubma PROPERTIES MACOSX_BUNDLE_INFO_PLIST
                                   ${PROJECT_SOURCE_DIR}/src/packaging/osx/Info.plist.in)
 
 
 ELSE()
         ADD_EXECUTABLE(
-                scantailor-universal ${gui_only_sources} ${resource_sources} ${win32_resource_file}
+                scantailor-ubma ${gui_only_sources} ${resource_sources} ${win32_resource_file}
         )
 ENDIF()
 
 TARGET_LINK_LIBRARIES(
-        scantailor-universal
+        scantailor-ubma
         fix_orientation page_split deskew select_content page_layout output stcore
         dewarping zones interaction imageproc math foundation exporting
 )
 
-ADD_DEPENDENCIES(scantailor-universal fix_orientation page_split deskew select_content page_layout output stcore
+ADD_DEPENDENCIES(scantailor-ubma fix_orientation page_split deskew select_content page_layout output stcore
         dewarping zones interaction imageproc math foundation)
 
 
-QT5_USE_MODULES(scantailor-universal Widgets Xml Svg ${MAYBE_QT_OPENGL_MODULE})
+QT5_USE_MODULES(scantailor-ubma Widgets Xml Svg ${MAYBE_QT_OPENGL_MODULE})
 
 IF(EXTRA_LIBS)
-        TARGET_LINK_LIBRARIES(scantailor-universal ${EXTRA_LIBS})
+        TARGET_LINK_LIBRARIES(scantailor-ubma ${EXTRA_LIBS})
 ENDIF()
 
 IF(APPLE)
-        INSTALL(TARGETS scantailor-universal BUNDLE DESTINATION . RUNTIME DESTINATION bin)
+        INSTALL(TARGETS scantailor-ubma BUNDLE DESTINATION . RUNTIME DESTINATION bin)
 ELSE(APPLE)
-        INSTALL(TARGETS scantailor-universal RUNTIME DESTINATION bin)
+        INSTALL(TARGETS scantailor-ubma RUNTIME DESTINATION bin)
 ENDIF(APPLE)
 
 # Translations
 TRANSLATION_SOURCES(
-        scantailor-universal
+        scantailor-ubma
         ${gui_only_sources}
 )
-FINALIZE_TRANSLATION_SET(scantailor-universal ${TRANSLATION_FILES})
-UPDATE_TRANSLATIONS_TARGET(update_translations scantailor-universal)
+FINALIZE_TRANSLATION_SET(scantailor-ubma ${TRANSLATION_FILES})
+UPDATE_TRANSLATIONS_TARGET(update_translations scantailor-ubma)
